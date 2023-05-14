@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * A class that represents a set of questions, performs Autismus test and collects answers.
+ * A class that represents a set of questions, performs Autism test and collects answers.
  */
 public class Questions {
     private final ArrayList<String> questions;

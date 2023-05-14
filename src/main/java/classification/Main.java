@@ -1,8 +1,6 @@
 package classification;
 
-import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
 
 import static java.lang.System.exit;
 
@@ -36,7 +34,7 @@ public class Main {
         trainData.removeColumns(new int[] {12, 15, 16, 17, 18, 19, 20});
 
         /*
-        Transform the data into cathegorical features
+        Transform the data into categorical features
         Features to be transformed:
         11: Gender (m: Male, f: Female)
         12: Jaundice (Yes, No)
