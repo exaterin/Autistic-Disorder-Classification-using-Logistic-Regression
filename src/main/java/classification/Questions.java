@@ -40,9 +40,9 @@ public class Questions {
      */
     public void askQuestions() {
         System.out.println("Please answer the following questions: ");
-        for (int i = 0; i < questions.size(); i++) {
-            System.out.println(questions.get(i));
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            for (int i = 0; i < questions.size(); i++) {
+                System.out.println(questions.get(i));
                 while (true) {  // Loop until the answer is in the correct format
                     String answer = reader.readLine();
                     boolean validFormat = switch (i) {
@@ -63,14 +63,11 @@ public class Questions {
                         System.out.println("Incorrect format. Please try again.");
                     }
                 }
-            } catch (IOException e) {
-                System.out.println("An error occurred while reading your answer.");
             }
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading your answer.");
         }
     }
-
-
-
 
     /**
      * Processes the answers and converts them to doubles using information about test evaluation.
@@ -78,25 +75,23 @@ public class Questions {
     public void processAnswers(){
         answersDouble = new double[answers.length];
         for (int i = 0; i < answers.length; i++) {
-            switch (answers[i]) {
-                case "yes":
-                case "no":
-                    if (i == 0 || i == 6 || i == 7 || i == 9 || i == 12 || i == 13) {
-                        answersDouble[i] = answers[i].equals("yes") ? 1 : 0;
-                    } else if (i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 8) {
-                        answersDouble[i] = answers[i].equals("yes") ? 0 : 1;
+            if (answers[i] != null) {  // Add this null check
+                switch (answers[i]) {
+                    case "yes", "no" -> {
+                        if(i == 0 || i == 6 || i == 7 || i == 9 || i == 12 || i == 13 ){
+                            answersDouble[i] = answers[i].equals("yes") ? 1 : 0;
+                        } else if(i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 8){
+                            answersDouble[i] = answers[i].equals("yes") ? 0 : 1;
+                        }
                     }
-                    break;
-                case "m":
-                    answersDouble[i] = 1;
-                    break;
-                case "f":
-                    answersDouble[i] = 0;
-                    break;
-                default:
-                    answersDouble[i] = Double.parseDouble(answers[i]);
-                    break;
+                    case "m" -> answersDouble[i] = 1;
+                    case "f" -> answersDouble[i] = 0;
+                    default -> answersDouble[i] = Double.parseDouble(answers[i]);
+                }
+            } else {
+                System.out.println("An error occurred: answer to question " + (i+1) + " is missing.");
             }
         }
     }
+
 }
